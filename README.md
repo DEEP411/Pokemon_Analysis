@@ -56,9 +56,5 @@ Before diving into the analysis, the dataset was cleaned to ensure accurate and 
 type_counts = df['Type 1'].value_counts()
 type_counts.plot.bar()
 
-![Pokemon by Primary Type](DEEP411/Pokemon_Analysis/Pokémon by Primary Type.png)
-
 average_stats = df.groupby('Type 1').mean()
 sns.heatmap(average_stats, annot=True, cmap='coolwarm')
-
-![Average pokemon stats by type](DEEP411/Pokemon_Analysis/Average Pokémon stats by Type.png)
