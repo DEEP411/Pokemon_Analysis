@@ -1,45 +1,64 @@
-# Pokemon_Analysis
+# Pokémon Analysis
 
-## Overview
-This project is a detailed analysis of Pokemon data using Python and Jupyter Notebook. The project includes data cleaning, exploration, and advanced analysis to uncover insights about Pokémon stats, types, and generations. The analysis also includes visualizations to communicate key findings.
+What is Pokémon? [Pokémon Introduction by Official Pokémon Channel](https://www.pokemon.com)
 
-## Key Steps and Analysis
-{markdown_content[:2000]}  # Truncate markdown content for brevity
-
-## Visualizations
-All visualizations are embedded within the notebook for easy interpretation.
+* Analysis of Pokémon dataset to explore stats, types, and trends across generations.
+* Used Python and Jupyter Notebook for data cleaning, exploratory analysis, and visualization.
+* Visualized various insights using bar charts, line graphs, and heatmaps.
+* Created advanced metrics such as Pokémon efficiency ratios and battle strengths.
 
 ---
 
-readme_content[:2000]  # Display the first part of the README content
-It seems the file cannot be fully accessed for content extraction in this environment. However, I can provide you with a structured README template that you can edit and fill in based on your notebook's contents. Here's how it would look:
+## Why Analyze Pokémon Data?
 
-## Dataset
-- **Source**: [Provide dataset source, e.g., Kaggle or your custom dataset]
-- **Columns**:
-  - `Name`: Name of the Pokémon.
-  - `Type 1`: Primary type of the Pokémon.
-  - `Type 2`: Secondary type of the Pokémon (if applicable).
-  - `HP`, `Attack`, `Defense`, `Sp. Atk`, `Sp. Def`, `Speed`: Base stats for each Pokémon.
-  - `Legendary`: Whether the Pokémon is Legendary (`True` or `False`).
+* Pokémon data contains a wealth of information, from basic stats like `HP` and `Attack` to types and Legendary status.
+* By analyzing this data, we can uncover interesting insights about Pokémon design and their performance characteristics.
+* This project serves as a fun and educational demonstration of data analysis techniques.
 
 ---
 
-## Steps in the Analysis
-1. **Data Cleaning**:
-   - Handled missing values for `Type 2`.
-   - Standardized column names.
-2. **Exploratory Data Analysis**:
-   - Visualized distributions of stats (`Attack`, `Speed`, etc.).
-   - Investigated relationships between Pokémon types and stats using heatmaps.
-3. **Advanced Analysis**:
-   - Efficiency ratios like `Attack-to-Defense` and `Speed-to-HP` were calculated for type-specific insights.
-   - Custom metrics, like "Battle Strength," were derived to rank Pokémon types.
+# Data Cleaning
+
+Before diving into the analysis, the dataset was cleaned to ensure accurate and consistent results:
+
+### **Steps in Data Cleaning**
+1. **Handling Missing Values**:
+   - The column `Type 2` had missing values for Pokémon with only one type. These were filled with `"None"`.
+   - Example:
+     ```python
+     df['Type 2'] = df['Type 2'].fillna('None')
+     ```
+
+2. **Standardizing Column Names**:
+   - Renamed columns to make them consistent and easy to use (e.g., `Sp. Atk` → `Sp_Atk`).
+     ```python
+     df.columns = df.columns.str.replace(' ', '_')
+     ```
+
+3. **Removing Duplicates**:
+   - Verified the dataset for duplicate entries to ensure no Pokémon were listed twice.
+
+4. **Type Conversion**:
+   - Ensured numeric columns (`HP`, `Attack`, etc.) were of the correct data type for statistical calculations.
+
+5. **Adding Derived Columns**:
+   - Created new columns like `"Rarity"` to classify Pokémon as `Legendary` or `Common`:
+     ```python
+     df['Rarity'] = df['Legendary'].apply(lambda x: 'Legendary' if x else 'Common')
+     ```
 
 ---
 
-## Visualizations
-Include links to or descriptions of key visualizations, e.g.:
-- **Heatmap**: Pokémon stats by type.
-- **Bar Chart**: Comparison of Legendary and Non-Legendary Pokémon stats.
-- **Line Plot**: Trends in Pokémon stats across generations.
+# Analysis
+
+### **Total Pokémon by Type**
+```python
+type_counts = df['Type 1'].value_counts()
+type_counts.plot.bar()
+
+![Pokemon by Primary Type](DEEP411/Pokemon_Analysis/Pokémon by Primary Type.png)
+
+average_stats = df.groupby('Type 1').mean()
+sns.heatmap(average_stats, annot=True, cmap='coolwarm')
+
+![Average pokemon stats by type](DEEP411/Pokemon_Analysis/Average Pokémon stats by Type.png)
